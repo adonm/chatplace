@@ -30,12 +30,28 @@ Bonus marks (110%)
 
 To get bonus marks for this project, the system should use the new HTML5 persistent web socket API, allowing the server to "push" updates to all clients that are currently logged in, in real-time (8%). Building the site using HTML5 and CSS3 is worth an additional 2%.
 
+[MDN] (https://developer.mozilla.org/en-US/) is the best reference for HTML/CSS docs. e.g. [WebSockets] (https://developer.mozilla.org/en-US/docs/WebSockets/Writing_WebSocket_client_applications)
+
 
 Libraries used:
 
-  - Bootstrap (CSS Framework)
-  - Angular.js (JS Framework)
+  - [Bootstrap CSS Framework](http://getbootstrap.com/getting-started/)
+  - [Angular.js](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/)
+
+Avoid using angulars built in routing, but Directives (little advanced) and Templates and Filters are awesome.
 
 Testing with Karma (http://karma-runner.github.io/0.12/index.html)
 
+Git tutorial: https://www.atlassian.com/git/tutorial/git-basics
+
+Pages we should mock up:
+
+  - Login screen
+  - Chat room browser/finding page (with map?)
+  - Profile/Dashboard with history
+  - Actual chat room (include example video/audio/images)
+  - User browser (find a user/see their chatrooms?)
+  - About page (include summary of libraries used and design of site?)
+
+All should have same navigation (bootstrap navbar) and perhaps a footer?
 
