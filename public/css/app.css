@@ -1,0 +1,11 @@
+li a.html5-logo {
+  padding: 0px;
+}
+
+a.html5-logo img {
+  height: 50px;
+}
+
+div#map {
+  height: 420px;
+}

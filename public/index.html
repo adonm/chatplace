@@ -1,41 +1,87 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="realtimechat">
-  <head>
+
+<html data-ng-app="chatplace" lang="en">
+<head>
+    <meta content="HTML Tidy for HTML5 (experimental) for Linux https://github.com/w3c/tidy-html5/tree/c63cc39" name="generator">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
 
-    <!-- Bootstrap -->
-    <link href="//cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>chatplace - realtime place centric chat</title><!--[if lt IE 9]>
+      <script  src="//cdn.jsdelivr.net/html5shiv/3.7.0/html5shiv.js"></script>
+      <script  src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+    <link href="//cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="//cdn.jsdelivr.net/leaflet/0.7.2/leaflet.css" rel="stylesheet" type="text/css">
+    <link href="/css/app.css" rel="stylesheet" type="text/css">
+</head>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="//cdn.jsdelivr.net/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-
-<div class="row">
-  <div class="col-xs-6 col-md-4">sidebar
-    <h1>Hello, world!</h1>
-</div>
-  <div class="col-xs-12 col-sm-6 col-md-8">Main content</div>
-</div>
-<div class="row">
-  <div class="col-xs-12 text-center">
+<body>
+    <div class="navbar navbar-default navbar-inverse navbar-static-top" data-bs-navbar="">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">chatplace</a>
+        </div>
 
 
-    <a href="http://validator.w3.org/check?uri=http%3A%2F%2Fstudent.csse.uwa.edu.au%2F~20138635%2FCITS3403%2F"><img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3.png" width="133" height="64" alt="HTML5 Powered with CSS3 / Styling" title="HTML5 Powered with CSS3 / Styling"></a>
-   </div>
-</div>
+        <ul class="nav navbar-nav">
+            <li data-match-route="/map">
+                <a href="#/map">Map</a>
+            </li>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//cdn.jsdelivr.net/jquery/2.1.0/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="//cdn.jsdelivr.net/angularjs/1.2.15/angular.min.js"></script>
-    <script src="//cdn.jsdelivr.net/angular.bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
-    <script src="//cdn.jsdelivr.net/angular.ui-router/0.2.10/angular-ui-router.min.js"></script>
-  </body>
+
+            <li data-match-route="/history">
+                <a href="#/history">History</a>
+            </li>
+        </ul>
+
+
+        <ul class="nav navbar-nav pull-right">
+            <li>
+                <a class="html5-logo" href=
+                "http://validator.w3.org/check?uri=http%3A%2F%2Fstudent.csse.uwa.edu.au%2F~20138635%2FCITS3403%2Fpublic%2Findex.html"><img alt=
+                "HTML5 Powered with CSS3 / Styling" src="/img/html5-badge-h-css3.png" title="HTML5 Powered with CSS3 / Styling"></a>
+            </li>
+
+
+            <li data-match-route="/about">
+                <a href="#/about">About</a>
+            </li>
+
+
+            <li data-match-route="/profile">
+                <a href="#/profile">Profile</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="container">
+        <div class="row home-div ng-hide" data-ng-include="'home-div.html'" ng-show="location.$$url == ''">
+        </div>
+
+
+        <div class="row map-div ng-hide" data-ng-include="'map-div.html'" ng-show="location.$$url == '/map'">
+        </div>
+
+
+        <div class="row history-div ng-hide" data-ng-include="'history-div.html'" ng-show="location.$$url == '/history'">
+        </div>
+
+
+        <div class="row about-div ng-hide" data-ng-include="'about-div.html'" ng-show="location.$$url == '/about'">
+        </div>
+
+
+        <div class="row profile-div ng-hide" data-ng-include="'profile-div.html'" ng-show="location.$$url == '/profile'">
+        </div>
+    </div>
+    <script src="//cdn.jsdelivr.net/angularjs/1.2.15/angular.min.js">
+</script><script src="//cdn.jsdelivr.net/angularjs/1.2.15/angular-animate.min.js">
+</script><script src="//cdn.jsdelivr.net/angular.strap/2.0.0/angular-strap.min.js">
+</script><script src="//cdn.jsdelivr.net/angular.strap/2.0.0/angular-strap.tpl.min.js">
+</script><script src="//cdn.jsdelivr.net/leaflet/0.7.2/leaflet.js">
+</script><script src="/js/app.js">
+</script><script async="" src="https://login.persona.org/include.js">
+</script>
+</body>
 </html>
-
