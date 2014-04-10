@@ -8,4 +8,11 @@ a.html5-logo img {
 
 div#map {
   height: 420px;
+  width: 100%;
+}
+
+.text-middle {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
