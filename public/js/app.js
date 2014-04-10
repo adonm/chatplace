@@ -1,6 +1,8 @@
+"use strict";
+
 angular.module("chatplace", [ "mgcrea.ngStrap" ]).run(function($rootScope, $location) {
     $rootScope.location = $location;
-    loadLeaflet = function(position) {
+    var loadLeaflet = function(position) {
         if (position == undefined) {
             var position = {
                 coords: {
@@ -15,13 +17,21 @@ angular.module("chatplace", [ "mgcrea.ngStrap" ]).run(function($rootScope, $loca
         L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-	angular.element(document.getElementById("mapLoadText")).remove();
+        angular.element(document.getElementById("mapLoadText")).remove();
     };
     $rootScope.loadMap = function() {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(loadLeaflet);
         } else {
             setTimeout(loadLeaflet, 50);
+        }
+    };
+}).directive("appMarkdown", function() {
+    var converter = new Showdown.converter();
+    return {
+        restrict: "AE",
+        link: function(scope, element, attrs) {
+            element.html(converter.makeHtml(element.text()));
         }
     };
 });
