@@ -26,6 +26,22 @@ angular.module("chatplace", [ "mgcrea.ngStrap" ]).run(function($rootScope, $loca
             setTimeout(loadLeaflet, 50);
         }
     };
+    $rootScope.loadWebRTC = function() {
+        angular.element(document.getElementById("localVideo")).removeClass("ng-hide");
+        var webrtc = new SimpleWebRTC({
+            // the id/element dom element that will hold "our" video
+            localVideoEl: "localVideo",
+            // the id/element dom element that will hold remote videos
+            remoteVideosEl: "remotesVideos",
+            // immediately ask for camera access
+            autoRequestMedia: true
+        });
+        // we have to wait until it's ready
+        webrtc.on("readyToCall", function() {
+            // this should poll ruby server and create/get room
+            webrtc.joinRoom("defaultRoom");
+        });
+    };
 }).directive("appMarkdown", function() {
     var converter = new Showdown.converter();
     return {

@@ -5,13 +5,19 @@ Version Control: GIT
 ### Libraries Used
 
 Javascript:
-  - [Angular.js](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/)
+
+ - [Angular.js](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/)
+ - [AngularStrap](http://mgcrea.github.io/angular-strap/)
+ - [SimpleWebRTC](http://simplewebrtc.com/)
+ - [Leaflet](http://leafletjs.com/)
 
 CSS Framework:
-  - [Bootstrap CSS Framework](http://getbootstrap.com/getting-started/)
+
+ - [Bootstrap CSS Framework](http://getbootstrap.com/getting-started/)
 
 Testing:
-  - [Testing with Karma](http://karma-runner.github.io/0.12/index.html)
+
+ - [Testing with Karma](http://karma-runner.github.io/0.12/index.html)
 
 ### Useful Documentation
 
