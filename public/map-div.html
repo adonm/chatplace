@@ -9,7 +9,7 @@
 
 
 <div class="col-xs-12 col-md-8">
-    <div class="alert" data-ng-class="{'alert-danger': validLocation ==" validlocation="">
+    <div class="alert" data-ng-class="{'alert-danger': !validLocation, 'alert-success': validLocation}">
         <form class="form-inline" role="form">
             <div class="form-group">
                 <input class="form-control" data-ng-change="zoomTo(searchLocation)" data-ng-model="searchLocation" placeholder="Enter location..." type="text">
