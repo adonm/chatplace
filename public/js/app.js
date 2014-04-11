@@ -1,7 +1,8 @@
 "use strict";
 
 angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($rootScope, $location, $http) {
-    $rootScope.location = $location;
+    var scope = $rootScope;
+    scope.location = $location;
     var loadLeaflet = function(position) {
         if (position == undefined) {
             var position = {
@@ -12,21 +13,21 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
             };
         }
         // create a map in the "map" div, set the view to a given place and zoom
-        var map = L.map("map").setView([ position.coords.latitude, position.coords.longitude ], 12);
+        window.map = L.map("map").setView([ position.coords.latitude, position.coords.longitude ], 12);
         // add an OpenStreetMap tile layer
         L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
         angular.element(document.getElementById("mapLoadText")).remove();
     };
-    $rootScope.loadMap = function() {
+    scope.loadMap = function() {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(loadLeaflet);
         } else {
             setTimeout(loadLeaflet, 50);
         }
     };
-    $rootScope.loadWebRTC = function() {
+    scope.loadWebRTC = function() {
         angular.element(document.getElementById("localVideo")).removeClass("ng-hide");
         var webrtc = new SimpleWebRTC({
             // the id/element dom element that will hold "our" video
@@ -43,36 +44,57 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
         });
     };
     $http.get("http://api.randomuser.me/").success(function(data) {
-        $rootScope.emailSuffix = data.results[0].user.email + " (Sign In)";
+        scope.emailSuffix = data.results[0].user.email + " (Sign In)";
     });
-    $rootScope.email = null;
-    $rootScope.loginlogout = function() {
-        if ($rootScope.email) {
+    scope.email = null;
+    scope.loginlogout = function() {
+        if (scope.email) {
             navigator.id.logout();
         } else {
             navigator.id.request();
         }
     };
     navigator.id.watch({
-        loggedInUser: $rootScope.email,
+        loggedInUser: scope.email,
         onlogin: function(assertion) {
             var data = {
                 assertion: assertion,
                 audience: window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
             };
             $http.post("https://cors-anywhere.herokuapp.com/https://verifier.login.persona.org/verify", data).success(function(data) {
-                $rootScope.email = data.email;
-                $rootScope.emailSuffix = "(Sign Out)";
+                scope.email = data.email;
+                scope.emailSuffix = "(Sign Out)";
             });
         },
         onlogout: function() {
             window.location.reload();
         }
     });
-    $rootScope.chatAside = {
-        title: "Pizza Chat (14 users)"
+    scope.searchLocation = null;
+    scope.zoomTo = function(textloc) {
+        console.log(textloc);
+        $http.get("http://nominatim.openstreetmap.org/search?format=json&limit=5&q=" + textloc).success(function(data) {
+            if (!data[0]) {
+                scope.validLocation = "";
+            } else {
+                scope.validLocation = data[0].display_name;
+                map.panTo([ data[0].lat, data[0].lon ]);
+            }
+        }).error(function(data) {
+            scope.validLocation = "";
+        });
     };
-    window.$rootScope = $rootScope;
+    scope.chatRoom = null;
+    scope.loadChatRoom = function(name) {
+        scope.chatRoom = name;
+    };
+    scope.chatRooms = {
+        pizzachat: {
+            title: "Pizza Chat",
+            users: [ "a@a.com", "b@b.com", "c@c.com" ]
+        }
+    };
+    window.angularScope = scope;
 }).directive("appMarkdown", function() {
     var converter = new Showdown.converter();
     return {

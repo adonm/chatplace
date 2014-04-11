@@ -1,14 +1,25 @@
 <div class="col-xs-12 col-md-4">
-
     <div class="list-group">
-        <a href="#/chat" class="list-group-item list-primary active" data-template="chat-div.html" data-placement="left" data-animation="am-slide-left" data-bs-aside="chatAside" data-container="body"><span class="glyphicon glyphicon-map-marker badge">14</span> Pizza Chat (0.5km)</a>
-        <a href="#/chat" class="list-group-item list-primary"><span class="glyphicon glyphicon-map-marker badge">6</span> Beach stuff (2km)</a>
-        <a href="#/chat" class="list-group-item list-primary"><span class="glyphicon glyphicon-map-marker badge">2</span> LaForge's House (3.2km)</a>
+        <a class="list-group-item list-primary" data-ng-class="{active: chatRoom == 'pizzachat'}" data-ng-click="loadChatRoom('pizzachat')" href=
+        "#"><span class="glyphicon glyphicon-map-marker badge">14</span> Pizza Chat (0.5km)</a> <a class="list-group-item list-primary" href=
+        "#/chat"><span class="glyphicon glyphicon-map-marker badge">6</span> Beach stuff (2km)</a> <a class="list-group-item list-primary" href=
+        "#/chat"><span class="glyphicon glyphicon-map-marker badge">2</span> LaForge's House (3.2km)</a>
     </div>
 </div>
 
 
 <div class="col-xs-12 col-md-8">
+    <div class="alert" data-ng-class="{'alert-danger': validLocation ==" validlocation="">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <input class="form-control" data-ng-change="zoomTo(searchLocation)" data-ng-model="searchLocation" placeholder="Enter location..." type="text">
+
+                <p>{{ validLocation }}</p>
+            </div>
+        </form>
+    </div>
+
+
     <div data-ng-init="loadMap()" id="map">
         <p class="text-center text-middle alert alert-info" id="mapLoadText">Loading Map...</p>
     </div>

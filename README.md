@@ -8,6 +8,21 @@
 
 This application is meant to enable people to easily connect to chat rooms that have been created near their location, using browsers geolocation api. The chatrooms locations & history will be stored in a database so people can resume chatting after disconnecting/reconnecting??
 
+### Stage 1
+
+ - Form Controls
+  - The [Chatrooms](#/chat) page uses a textinput for searching
+  - There is a form with buttons on the homepage when joined to a chatroom for sending messages/starting a video stream etc.
+ - CSS - See the [Chatrooms](#/chat) page, the entire app uses mainly Bootstrap CSS
+  - Some custom css is used for placing widgets, see [app.css](css/app.css)
+  - The css layout is partially responsive except for the navbar
+ - Client-side Programming: Javascript - Basic form validation
+  - The [Chatrooms](#/chat) page validates the address used for searching
+  - The email login form validates email addresses, but is a third party util (Mozilla Persona)
+ - Demonstrating the use of DHTML (A combination of CSS, JavaScript, DOM and Event Models)
+  - The site uses a single page layout, with fragments lazy loaded using angular
+  - You can see examples of DHTML on the map widget, the login button (topright) and the navbar
+
 
 ### Baseline (85%)
 
