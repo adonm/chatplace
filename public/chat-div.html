@@ -1,0 +1,33 @@
+<div class="aside" tabindex="-1" role="dialog">
+  <div class="aside-dialog">
+    <div class="aside-content">
+      <div class="aside-header">
+        <button type="button" class="close" data-ng-click="$hide()">&times;</button>
+        <h4 class="aside-title"> {{ title }}</h4>
+      </div>
+      <div class="aside-body">
+
+    <video class="ng-hide" height="200" id="localVideo"></video>
+
+    <div id="remotesVideos">
+    </div>
+  <div class="panel-footer">
+</div>
+      </div>
+      <div class="aside-footer">
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <input type="email" class="form-control" id="chatInput" placeholder="Start typing...">
+  </div>
+    <div class="btn-group">
+     <button class="btn btn-default">Send</button>
+        <button class="btn btn-default" data-ng-click="loadWebRTC()" type="button"><span class="glyphicon glyphicon-facetime-video"><!----></span></button> <button class="btn btn-default" onclick="TogetherJS(this); return false;" type="button"><span class="glyphicon glyphicon-send">
+        <!----></span></button>
+    </div>
+   </div>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+

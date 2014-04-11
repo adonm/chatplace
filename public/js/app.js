@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("chatplace", [ "mgcrea.ngStrap" ]).run(function($rootScope, $location) {
+angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($rootScope, $location, $http) {
     $rootScope.location = $location;
     var loadLeaflet = function(position) {
         if (position == undefined) {
@@ -42,6 +42,37 @@ angular.module("chatplace", [ "mgcrea.ngStrap" ]).run(function($rootScope, $loca
             webrtc.joinRoom("defaultRoom");
         });
     };
+    $http.get("http://api.randomuser.me/").success(function(data) {
+        $rootScope.emailSuffix = data.results[0].user.email + " (Sign In)";
+    });
+    $rootScope.email = null;
+    $rootScope.loginlogout = function() {
+        if ($rootScope.email) {
+            navigator.id.logout();
+        } else {
+            navigator.id.request();
+        }
+    };
+    navigator.id.watch({
+        loggedInUser: $rootScope.email,
+        onlogin: function(assertion) {
+            var data = {
+                assertion: assertion,
+                audience: window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
+            };
+            $http.post("https://cors-anywhere.herokuapp.com/https://verifier.login.persona.org/verify", data).success(function(data) {
+                $rootScope.email = data.email;
+                $rootScope.emailSuffix = "(Sign Out)";
+            });
+        },
+        onlogout: function() {
+            window.location.reload();
+        }
+    });
+    $rootScope.chatAside = {
+        title: "Pizza Chat (14 users)"
+    };
+    window.$rootScope = $rootScope;
 }).directive("appMarkdown", function() {
     var converter = new Showdown.converter();
     return {

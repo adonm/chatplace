@@ -6,10 +6,12 @@ Version Control: GIT
 
 Javascript:
 
- - [Angular.js](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/)
- - [AngularStrap](http://mgcrea.github.io/angular-strap/)
- - [SimpleWebRTC](http://simplewebrtc.com/)
- - [Leaflet](http://leafletjs.com/)
+ - [Angular.js](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/) - JS code structure
+ - [AngularStrap](http://mgcrea.github.io/angular-strap/) - JS Bootstrap integratoin
+ - [Mozilla Persona](http://www.mozilla.org/en-US/persona/) - Sign in with email
+ - [angular-gravatar](https://github.com/wallin/angular-gravatar) - Load user images
+ - [SimpleWebRTC](http://simplewebrtc.com/) - Potential video/audio chat
+ - [Leaflet](http://leafletjs.com/) - For displaying the map
 
 CSS Framework:
 
