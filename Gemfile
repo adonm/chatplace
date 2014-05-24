@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
-ruby '1.9.3'
 
-gem 'rails', '3.2.11'
-gem 'faye-rails', '~> 1.0.6'
+gem 'faye-rails'
 gem 'thin'
 gem 'haml-rails'
+gem 'actionmailer'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem 'jquery-rails'
   gem 'momentjs-rails'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier'
+  gem 'therubyracer'
 end
