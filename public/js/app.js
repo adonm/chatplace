@@ -95,6 +95,43 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
         }
     };
     window.angularScope = scope;
+
+      var client;
+
+      client = new Faye.Client('/faye');
+
+      client.subscribe('/chat', function(payload) {
+        var time;
+        time = moment(payload.created_at).format('D/M/YYYY H:mm:ss');
+        return $('#chat').append("<li>" + time + " : " + payload.message + "</li>");
+      });
+
+      $(document).ready(function() {
+        var button, input;
+        input = $('input');
+        button = $('button');
+        return button.click(function() {
+          var publication;
+          button.attr('disabled', 'disabled');
+          button.text('Posting...');
+          publication = client.publish('/chat', {
+            message: input.val(),
+            created_at: new Date()
+          });
+          publication.callback(function() {
+            input.val("");
+            button.removeAttr('disabled');
+            return button.text('Post');
+          });
+          return publication.errback(function() {
+            button.removeAttr('disabled');
+            return button.text('Try again');
+          });
+        });
+      });
+
+      window.client = client;
+
 }).directive("appMarkdown", function() {
     var converter = new Showdown.converter();
     return {

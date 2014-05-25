@@ -1,55 +1,99 @@
 <!DOCTYPE html>
-<html>
+
+<html data-ng-app="chatplace" lang="en">
 <head>
-  <title>FayeRailsDemo</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/momentjs/2.6.0/moment.min.js"></script>
-  <script src="js/vendor/faye-browser-min.js"></script>
-  <script>
-$(document).ready(function() {
-  var client;
+    <meta content="HTML Tidy for HTML5 (experimental) for Linux https://github.com/w3c/tidy-html5/tree/c63cc39" name="generator">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
 
-  client = new Faye.Client('/faye');
-
-  client.subscribe('/chat', function(payload) {
-    var time;
-    time = moment(payload.created_at).format('D/M/YYYY H:mm:ss');
-    return $('#chat').append("<li>" + time + " : " + payload.message + "</li>");
-  });
-
-  $(document).ready(function() {
-    var button, input;
-    input = $('input');
-    button = $('button');
-    return button.click(function() {
-      var publication;
-      button.attr('disabled', 'disabled');
-      button.text('Posting...');
-      publication = client.publish('/chat', {
-        message: input.val(),
-        created_at: new Date()
-      });
-      publication.callback(function() {
-        input.val("");
-        button.removeAttr('disabled');
-        return button.text('Post');
-      });
-      return publication.errback(function() {
-        button.removeAttr('disabled');
-        return button.text('Try again');
-      });
-    });
-  });
-
-  window.client = client;
-});
-  </script>
-  <%= csrf_meta_tags %>
+    <title>chatplace - realtime place centric chat</title><!--[if lt IE 9]>
+      <script  src="//cdn.jsdelivr.net/html5shiv/3.7.0/html5shiv.js"></script>
+      <script  src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+    <link href="//cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="//cdn.jsdelivr.net/leaflet/0.7.2/leaflet.css" rel="stylesheet" type="text/css">
+    <link href="css/app.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
+    <div class="navbar navbar-default navbar-inverse navbar-static-top" data-bs-navbar="" data-ng-cloak="">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">chatplace</a>
+        </div>
 
-<%= yield %>
 
+        <ul class="nav navbar-nav">
+            <li>
+                <a class="html5-logo" href=
+                "http://validator.w3.org/check?uri=http%3A%2F%2Fstudent.csse.uwa.edu.au%2F~20138635%2FCITS3403%2Fpublic%2F"><img alt="HTML5 Powered with CSS3 / Styling"
+                src="img/html5-badge-h-css3.png" title="HTML5 Powered with CSS3 / Styling"></a>
+            </li>
+
+
+            <li data-match-route="/chat">
+                <a href="#/chat">Chatrooms</a>
+            </li>
+
+
+            <li data-match-route="/history">
+                <a href="#/history">History</a>
+            </li>
+        </ul>
+
+
+        <ul class="nav navbar-nav pull-right">
+            <li data-match-route="/about">
+                <a href="#/about">About</a>
+            </li>
+
+
+            <li data-match-route="/profile">
+                <a href="#/profile">Profile</a>
+            </li>
+
+
+            <li><button class="btn navbar-btn" data-ng-class="{'btn-primary': !email}" data-ng-click="loginlogout()" type="button"><span class=
+            "glyphicon glyphicon-user"><!----></span> {{ email }} {{ emailSuffix }}</button> &nbsp;</li>
+        </ul>
+    </div>
+
+
+    <div class="container">
+        <%= yield %>
+        <div class="row home-div ng-hide" data-ng-include="'home-div.html'" data-ng-show="location.$$url == ''">
+        </div>
+
+
+        <div class="row map-div ng-hide" data-ng-include="'map-div.html'" data-ng-show="location.$$url == '/chat'">
+        </div>
+
+
+        <div class="row history-div ng-hide" data-ng-include="'history-div.html'" data-ng-show="location.$$url == '/history'">
+        </div>
+
+
+        <div class="row about-div ng-hide" data-ng-include="'about-div.html'" data-ng-show="location.$$url == '/about'">
+        </div>
+
+
+        <div class="row profile-div ng-hide" data-ng-include="'profile-div.html'" data-ng-show="location.$$url == '/profile'">
+        </div>
+    </div>
+    <script src="//cdn.jsdelivr.net/angularjs/1.2.15/angular.js">
+</script><script src="//cdn.jsdelivr.net/angularjs/1.2.15/angular-animate.min.js">
+</script><script src="//cdn.jsdelivr.net/angular.strap/2.0.0/angular-strap.min.js">
+</script><script src="//cdn.jsdelivr.net/angular.strap/2.0.0/angular-strap.tpl.min.js">
+</script><script src="//cdn.jsdelivr.net/showdown/0.3.1/showdown.js">
+</script><script src="//cdn.jsdelivr.net/leaflet/0.7.2/leaflet.js"></script>
+<script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/momentjs/2.6.0/moment.min.js"></script>
+<script src="js/vendor/faye-browser-min.js">
+</script><script src="js/vendor/simplewebrtc.js">
+</script><script src="js/vendor/md5.min.js">
+</script><script src="js/vendor/angular-gravatar.min.js">
+</script><script src="https://login.persona.org/include.js">
+</script><script src="https://togetherjs.com/togetherjs-min.js">
+</script><script src="js/app.js">
+</script>
 </body>
 </html>

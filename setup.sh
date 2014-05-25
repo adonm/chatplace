@@ -1,2 +1,2 @@
 #!/bin/bash
-bundle install --path vendor/bundle
+bundle install --path vendor/bundle --clean
