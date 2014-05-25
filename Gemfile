@@ -8,8 +8,6 @@ gem 'actionmailer'
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
-  gem 'jquery-rails'
-  gem 'momentjs-rails'
   gem 'uglifier'
   gem 'therubyracer'
 end
