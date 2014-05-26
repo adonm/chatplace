@@ -47,71 +47,29 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
         scope.emailSuffix = data.results[0].user.email + " (Sign In)";
     });
     scope.email = null;
-    /* PROPERTIES */
-    scope.loginPath = "/login";
-    scope.logoutPath = "/logout";
-    scope.debug = false;
-    /* HANDLERS */
-    scope.onLogin = function(data, status, xhr) {
-        if (this.debug) {
-            return alert("Login: " + status + "\n" + data);
-        } else {
-            return window.location.reload();
-        }
-    }, scope.onLoginError = function(xhr, status, err) {
-        return alert("Login: " + status + " " + err + "\n" + xhr.responseText);
-    }, scope.onLogout = function(data, status, xhr) {
-        if (this.debug) {
-            return alert("Logout: " + status + "\n" + data);
-        } else {
-            return window.location.reload();
-        }
-    }, scope.onLogoutError = function(xhr, status, err) {
-        return alert("Logout: " + status + " " + err + "\n" + xhr.responseText);
-    }, /* INITIALIZATION */
-    scope.setup = function(currentUser) {
-        if (currentUser == null) {
-            currentUser = null;
-        }
-        return navigator.id.watch({
-            loggedInUser: currentUser,
-            onlogin: function(assertion) {
-                return $.ajax({
-                    type: "POST",
-                    url: scope.loginPath,
-                    data: {
-                        assertion: assertion
-                    },
-                    success: function(data, status, xhr) {
-                        return scope.onLogin(data, status, xhr);
-                    },
-                    error: function(xhr, status, err) {
-                        return scope.onLoginError(xhr, status, err);
-                    }
-                });
-            },
-            onlogout: function() {
-                return $.ajax({
-                    type: "POST",
-                    url: scope.logoutPath,
-                    success: function(data, status, xhr) {
-                        return scope.onLogout(data, status, xhr);
-                    },
-                    error: function(xhr, status, err) {
-                        return scope.onLogoutError(xhr, status, err);
-                    }
-                });
-            }
-        });
-        $(document).on("click", ".browserid_login", function() {
-            navigator.id.request();
-            return false;
-        });
-        $(document).on("click", ".browserid_logout", function() {
+    scope.loginlogout = function() {
+        if (scope.email) {
             navigator.id.logout();
-            return false;
-        });
+        } else {
+            navigator.id.request();
+        }
     };
+    navigator.id.watch({
+        loggedInUser: scope.email,
+        onlogin: function(assertion) {
+            var data = {
+                assertion: assertion,
+                audience: window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
+            };
+            $http.post("https://cors-anywhere.herokuapp.com/https://verifier.login.persona.org/verify", data).success(function(data) {
+                scope.email = data.email;
+                scope.emailSuffix = "(Sign Out)";
+            });
+        },
+        onlogout: function() {
+            window.location.reload();
+        }
+    });
     scope.searchLocation = null;
     scope.zoomTo = function(textloc) {
         console.log(textloc);
@@ -146,14 +104,14 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
     });
     $(document).ready(function() {
         var button, input;
-        input = $("input");
-        button = $("button");
+        input = $("input#testinput");
+        button = $("button#testpost");
         return button.click(function() {
             var publication;
             button.attr("disabled", "disabled");
             button.text("Posting...");
             publication = client.publish("/message/test", {
-                message: input.val(),
+                message: "(" + scope.email + ") " + input.val(),
                 created_at: new Date()
             });
             publication.callback(function() {

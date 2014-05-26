@@ -54,9 +54,6 @@
 
 
             <li>
-            <%= logout_link %>
-
-            <%= login_link "Login with Persona" %>
             <button class="btn navbar-btn" data-ng-class="{'btn-primary': !email}" data-ng-click="loginlogout()" type="button"><span class=
             "glyphicon glyphicon-user"><!----></span> {{ email }} {{ emailSuffix }}</button> &nbsp;</li>
         </ul>
@@ -64,8 +61,56 @@
 
 
     <div class="container">
-        <%= yield %>
-        <div class="row home-div ng-hide" data-ng-include="'home-div.html'" data-ng-show="location.$$url == ''">
+        <div class="row home-div ng-hide" data-ng-show="location.$$url == ''">
+<div class="col-xs-12 col-md-4">
+    <h2>Users</h2>
+
+
+    <ul>
+        <li data-ng-repeat="user in chatRooms[chatRoom].users">{{user}}</li>
+    </ul>
+</div>
+
+
+<div class="col-xs-12 col-md-8">
+    <h2 data-ng-class="{hide: chatRoom}">You haven't joined a <a href="#/chat">chatroom</a> yet!</h2>
+
+
+    <div class="panel panel-default" data-ng-class="{hide: !chatRoom}">
+        <div class="panel-heading">
+            {{ chatRooms[chatRoom].title }} ({{ chatRooms[chatRoom].users.length }} joined)
+        </div>
+
+
+        <div class="panel-body">
+            <video class="ng-hide" height="200" id="localVideo"></video>
+
+            <div id="remotesVideos">
+            </div>
+
+
+            <div class="well">
+		<%= yield %>
+            </div>
+        </div>
+
+
+        <div class="panel-footer">
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <input class="form-control" id="testinput" placeholder="Start typing..." type="text">
+                </div>
+
+
+                <div class="btn-group">
+                    <button id="testpost" class="btn btn-default">Send</button> <button class="btn btn-default" data-ng-click="loadWebRTC()" type="button"><span class=
+                    "glyphicon glyphicon-facetime-video"><!----></span></button> <button class="btn btn-default" onclick="TogetherJS(this); return false;"
+                    type="button"><span class="glyphicon glyphicon-send"><!----></span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
         </div>
 
 
