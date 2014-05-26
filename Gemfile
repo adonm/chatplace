@@ -1,6 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'hobo'
+gem 'sqlite3'
+gem 'foreigner'
+gem 'immigrant'
 gem 'faye-rails'
 gem 'thin'
 gem 'therubyracer'
+gem 'browserid-auth-rails'

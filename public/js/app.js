@@ -100,7 +100,7 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
 
       client = new Faye.Client('/faye');
 
-      client.subscribe('/chat', function(payload) {
+      client.subscribe('/chat/test', function(payload) {
         var time;
         time = moment(payload.created_at).format('D/M/YYYY H:mm:ss');
         return $('#chat').append("<li>" + time + " : " + payload.message + "</li>");
@@ -114,7 +114,7 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
           var publication;
           button.attr('disabled', 'disabled');
           button.text('Posting...');
-          publication = client.publish('/chat', {
+          publication = client.publish('/chat/test', {
             message: input.val(),
             created_at: new Date()
           });
