@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'hobo'
+gem 'rails'
 gem 'sqlite3'
-gem 'foreigner'
-gem 'immigrant'
+gem 'schema_plus'
+gem 'schema_associations'
+gem 'devise'
 gem 'faye-rails'
 gem 'thin'
 gem 'therubyracer'

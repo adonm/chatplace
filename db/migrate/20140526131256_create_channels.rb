@@ -9,7 +9,7 @@ class CreateChannels < ActiveRecord::Migration
       t.timestamps
     end
     add_index :channels, :owner_email
-    add_index :channels, :name
+    add_index :channels, :name, unique: true
     add_index :channels, :longitude
     add_index :channels, :latitude
   end

@@ -66,7 +66,7 @@ module ChatPlace
     config.assets.version = '1.0'
 
     config.middleware.use FayeRails::Middleware, mount: '/faye', :timeout => 25 do
-      map '/chat' => RealtimeChatController
+      map '/message/**' => RealtimeMessageController
       map :default => :block
     end
 

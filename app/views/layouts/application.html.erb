@@ -13,6 +13,7 @@
     <link href="//cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="//cdn.jsdelivr.net/leaflet/0.7.2/leaflet.css" rel="stylesheet" type="text/css">
     <link href="css/app.css" rel="stylesheet" type="text/css">
+    <%= setup_browserid debug: true %>
 </head>
 
 <body>
@@ -52,7 +53,11 @@
             </li>
 
 
-            <li><button class="btn navbar-btn" data-ng-class="{'btn-primary': !email}" data-ng-click="loginlogout()" type="button"><span class=
+            <li>
+            <%= logout_link %>
+
+            <%= login_link "Login with Persona" %>
+            <button class="btn navbar-btn" data-ng-class="{'btn-primary': !email}" data-ng-click="loginlogout()" type="button"><span class=
             "glyphicon glyphicon-user"><!----></span> {{ email }} {{ emailSuffix }}</button> &nbsp;</li>
         </ul>
     </div>
