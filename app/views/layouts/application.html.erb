@@ -1,147 +1,74 @@
 <!DOCTYPE html>
 
-<html data-ng-app="chatplace" lang="en">
+<html lang="en">
 <head>
-    <meta content="HTML Tidy for HTML5 (experimental) for Linux https://github.com/w3c/tidy-html5/tree/c63cc39" name="generator">
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta charset="utf-8" />
+  <title><%= strip_tags(@title) %> - MyApp</title>
 
-    <title>chatplace - realtime place centric chat</title><!--[if lt IE 9]>
-      <script  src="//cdn.jsdelivr.net/html5shiv/3.7.0/html5shiv.js"></script>
-      <script  src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= csrf_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
   <![endif]-->
-    <link href="//cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="//cdn.jsdelivr.net/leaflet/0.7.2/leaflet.css" rel="stylesheet" type="text/css">
-    <link href="css/app.css" rel="stylesheet" type="text/css">
-    <%= setup_browserid debug: true %>
+
+  <%= favicon_link_tag %>
+  <%= favicon_link_tag '/apple-touch-icon.png',
+                       rel: 'apple-touch-icon',
+                       type: 'image/png' %>
+  <%= favicon_link_tag '/apple-touch-icon-72x72.png',
+                       rel: 'apple-touch-icon',
+                       type: 'image/png',
+                       sizes: "72x72" %>
+  <%= favicon_link_tag '/apple-touch-icon-114x114.png',
+                       rel: 'apple-touch-icon',
+                       type: 'image/png',
+                       sizes: "114x114" %>
+
+  <%= yield :head %>
 </head>
-
 <body>
-    <div class="navbar navbar-default navbar-inverse navbar-static-top" data-bs-navbar="" data-ng-cloak="">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">chatplace</a>
-        </div>
 
+<nav class="navbar navbar-default" role="navigation">
+  <%= render 'layouts/nav' %>
+</nav>
 
-        <ul class="nav navbar-nav">
-            <li>
-                <a class="html5-logo" href=
-                "http://validator.w3.org/check?uri=http%3A%2F%2Fstudent.csse.uwa.edu.au%2F~20138635%2FCITS3403%2Fpublic%2F"><img alt="HTML5 Powered with CSS3 / Styling"
-                src="img/html5-badge-h-css3.png" title="HTML5 Powered with CSS3 / Styling"></a>
-            </li>
+<div class="container">
 
+  <h1><%= @title %></h1>
 
-            <li data-match-route="/chat">
-                <a href="#/chat">Chatrooms</a>
-            </li>
-
-
-            <li data-match-route="/history">
-                <a href="#/history">History</a>
-            </li>
-        </ul>
-
-
-        <ul class="nav navbar-nav pull-right">
-            <li data-match-route="/about">
-                <a href="#/about">About</a>
-            </li>
-
-
-            <li data-match-route="/profile">
-                <a href="#/profile">Profile</a>
-            </li>
-
-
-            <li>
-            <button class="btn navbar-btn" data-ng-class="{'btn-primary': !email}" data-ng-click="loginlogout()" type="button"><span class=
-            "glyphicon glyphicon-user"><!----></span> {{ email }} {{ emailSuffix }}</button> &nbsp;</li>
-        </ul>
+  <div class="row actions">
+    <div class="col-md-5">
+        <%= yield :tools %>
     </div>
+    <div class="col-md-7">
+      <div class="btn-toolbar pull-right">
+        <%= yield :actions %>
+      </div>
+    </div>
+  </div>
 
+  <div id="flash">
+    <%= render partial: 'layouts/flash', collection: [:notice, :alert], as: :level %>
+  </div>
 
-    <div class="container">
-        <div class="row home-div ng-hide" data-ng-show="location.$$url == ''">
-<div class="col-xs-12 col-md-4">
-    <h2>Users</h2>
+  <div id="content">
+    <%= yield %>
+  </div>
 
-
-    <ul>
-        <li data-ng-repeat="user in chatRooms[chatRoom].users">{{user}}</li>
-    </ul>
 </div>
 
+<footer>
+  <p>&copy; code!z <%= Time.zone.now.year %></p>
+</footer>
 
-<div class="col-xs-12 col-md-8">
-    <h2 data-ng-class="{hide: chatRoom}">You haven't joined a <a href="#/chat">chatroom</a> yet!</h2>
+<!-- Javascript placed at the end of the document so the pages load faster -->
+<%= javascript_tag yield(:javascripts) if content_for?(:javascripts) %>
 
-
-    <div class="panel panel-default" data-ng-class="{hide: !chatRoom}">
-        <div class="panel-heading">
-            {{ chatRooms[chatRoom].title }} ({{ chatRooms[chatRoom].users.length }} joined)
-        </div>
-
-
-        <div class="panel-body">
-            <video class="ng-hide" height="200" id="localVideo"></video>
-
-            <div id="remotesVideos">
-            </div>
-
-
-            <div class="well">
-		<%= yield %>
-            </div>
-        </div>
-
-
-        <div class="panel-footer">
-            <form class="form-inline" role="form">
-                <div class="form-group">
-                    <input class="form-control" id="testinput" placeholder="Start typing..." type="text">
-                </div>
-
-
-                <div class="btn-group">
-                    <button id="testpost" class="btn btn-default">Send</button> <button class="btn btn-default" data-ng-click="loadWebRTC()" type="button"><span class=
-                    "glyphicon glyphicon-facetime-video"><!----></span></button> 
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-        </div>
-
-
-        <div class="row map-div ng-hide" data-ng-include="'map-div.html'" data-ng-show="location.$$url == '/chat'">
-        </div>
-
-
-        <div class="row history-div ng-hide" data-ng-include="'history-div.html'" data-ng-show="location.$$url == '/history'">
-        </div>
-
-
-        <div class="row about-div ng-hide" data-ng-include="'about-div.html'" data-ng-show="location.$$url == '/about'">
-        </div>
-
-
-        <div class="row profile-div ng-hide" data-ng-include="'profile-div.html'" data-ng-show="location.$$url == '/profile'">
-        </div>
-    </div>
-    <script src="//cdn.jsdelivr.net/angularjs/1.2.15/angular.js">
-</script><script src="//cdn.jsdelivr.net/angularjs/1.2.15/angular-animate.min.js">
-</script><script src="//cdn.jsdelivr.net/angular.strap/2.0.0/angular-strap.min.js">
-</script><script src="//cdn.jsdelivr.net/angular.strap/2.0.0/angular-strap.tpl.min.js">
-</script><script src="//cdn.jsdelivr.net/showdown/0.3.1/showdown.js">
-</script><script src="//cdn.jsdelivr.net/leaflet/0.7.2/leaflet.js"></script>
-<script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
-<script src="//cdn.jsdelivr.net/momentjs/2.6.0/moment.min.js"></script>
-<script src="js/vendor/faye-browser-min.js">
-</script><script src="js/vendor/simplewebrtc.js">
-</script><script src="js/vendor/md5.min.js">
-</script><script src="js/vendor/angular-gravatar.min.js">
-</script><script src="https://login.persona.org/include.js">
-</script><script src="js/app.js">
-</script>
 </body>
 </html>

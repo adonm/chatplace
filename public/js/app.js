@@ -91,7 +91,7 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
     scope.chatRooms = {
         pizzachat: {
             title: "Pizza Chat",
-            users: [ "a@a.com", "b@b.com", "c@c.com" ]
+            users: []
         }
     };
     window.angularScope = scope;

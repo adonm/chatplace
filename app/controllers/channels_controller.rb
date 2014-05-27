@@ -1,2 +1,2 @@
-class ChannelsController < ApplicationController
+class ChannelsController < CrudController
 end
