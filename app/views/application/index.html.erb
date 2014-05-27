@@ -1,9 +1,9 @@
 <ul id="chat">
-  <% @chat_messages.each do |chat_message| %>
+  <% @messages.each do |message| %>
     <li>
-      <%= chat_message.created_at.strftime('%-d/%-m/%Y %k:%M:%S') %>
+      <%= message.time %>
       <%= ':' %>
-      <%= chat_message.message %>
+      <%= message.body %>
     </li>
   <% end %>
 </ul>

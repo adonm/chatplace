@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526210917) do
+ActiveRecord::Schema.define(version: 20140527004313) do
 
   create_table "channels", force: true do |t|
     t.string   "owner_email"
@@ -43,17 +43,17 @@ ActiveRecord::Schema.define(version: 20140526210917) do
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   end
 
-  create_table "messages", force: true do |t|
+  create_table "chatmessages", force: true do |t|
     t.integer  "user_id"
     t.integer  "channel_id"
     t.text     "body"
     t.datetime "time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["channel_id"], :name => "fk__messages_channel_id"
-    t.index ["user_id"], :name => "fk__messages_user_id"
-    t.foreign_key ["channel_id"], "channels", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_messages_channel_id"
-    t.foreign_key ["user_id"], "users", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_messages_user_id"
+    t.index ["channel_id"], :name => "fk__chatmessages_channel_id"
+    t.index ["user_id"], :name => "fk__chatmessages_user_id"
+    t.foreign_key ["channel_id"], "channels", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_chatmessages_channel_id"
+    t.foreign_key ["user_id"], "users", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_chatmessages_user_id"
   end
 
 end

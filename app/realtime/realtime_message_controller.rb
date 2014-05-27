@@ -9,7 +9,7 @@ class RealtimeMessageController < FayeRails::Controller
                      Time.now
                    end
 
-      ChatMessage.new(message['message'], created_at)
+      Chatmessage.create(body: message['message'], time: created_at)
     end
   end
 end

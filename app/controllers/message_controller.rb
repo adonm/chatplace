@@ -1,5 +1,5 @@
 class MessageController < ApplicationController
   def index
-    @chat_messages = ChatMessage.find
+    @messages = Chatmessage.all
   end
 end
