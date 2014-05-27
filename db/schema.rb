@@ -11,20 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140527004313) do
-
-  create_table "channels", force: true do |t|
-    t.string   "owner_email"
-    t.string   "name"
-    t.float    "longitude"
-    t.float    "latitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["latitude"], :name => "index_channels_on_latitude"
-    t.index ["longitude"], :name => "index_channels_on_longitude"
-    t.index ["name"], :name => "index_channels_on_name", :unique => true
-    t.index ["owner_email"], :name => "index_channels_on_owner_email"
-  end
+ActiveRecord::Schema.define(version: 20140527021622) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -41,6 +28,17 @@ ActiveRecord::Schema.define(version: 20140527004313) do
     t.datetime "updated_at"
     t.index ["email"], :name => "index_users_on_email", :unique => true
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  end
+
+  create_table "channels", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.float    "longitude"
+    t.float    "latitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["user_id"], :name => "fk__channels_user_id"
+    t.foreign_key ["user_id"], "users", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_channels_user_id"
   end
 
   create_table "chatmessages", force: true do |t|
