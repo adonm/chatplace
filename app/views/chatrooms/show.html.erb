@@ -1,7 +1,9 @@
 <div class="panel panel-default" data-ng-init="chatRoom=<%= @chatroom.id %>; loadChatRoom()">
     <div class="panel-heading">
         <% @title ||= ti(:title, model: full_entry_label).html_safe -%>
-        <%= @chatroom %> (X users, Y messages, created Z)
+        <% @messages = @chatroom.chatmessages %>
+        <% @userids = @messages.map(&:user_id).uniq %>
+        <strong><%= @chatroom %></strong> (<%= @userids.count %> users, <%= @messages.count %> messages, created <%= @chatroom.created_at %> by <%= @chatroom.user %>)
         <% content_for(:actions, render('actions_show')) %>
     </div>
 
@@ -9,9 +11,9 @@
         <video class="ng-hide" height="200" id="localVideo"></video>
         <div id="remotesVideos">
         </div>
-        <div class="well">
+        <div class="well" id="chatwell">
             <ul id="chat">
-                <% for @message in @chatroom.chatmessages %>
+                <% for @message in @messages %>
                     <li><%= @message.user %>: <%= @message.body %></li>
                 <% end %>
             </ul>

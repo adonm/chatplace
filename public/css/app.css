@@ -16,3 +16,8 @@ div#map {
     vertical-align: middle;
     float: none;
 }
+
+div#chatwell {
+    height: 400px;
+    overflow: auto;
+}

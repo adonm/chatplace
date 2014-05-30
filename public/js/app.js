@@ -110,6 +110,18 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
             });
         });
     };
+    scope.addChannel = function() {
+        var data = {
+            "name": scope.validLocation,
+            "latitude": map.getCenter()["lat"],
+            "longitude": map.getCenter()["lng"],
+            "authenticity_token": $('meta[name=csrf-token]').attr('content')
+        }
+
+        $http.post("/chatrooms.json", data).success(function(data) {
+            window.location.reload();
+        });
+    }
     window.angularScope = scope;
 }).directive("appMarkdown", function() {
     var converter = new Showdown.converter();

@@ -3,8 +3,7 @@
         <form class="form-inline" role="form">
             <div class="form-group">
                 <input class="form-control" data-ng-change="zoomTo(searchLocation)" data-ng-model="searchLocation" placeholder="Enter location..." type="text">
-
-                <p>{{ validLocation }}</p>
+                <p>{{ validLocation }} <button class="btn" data-ng-click="addChannel()" data-ng-class="{'hide': !validLocation, 'btn-success': validLocation}">Add</button)</p>
             </div>
         </form>
     </div>
