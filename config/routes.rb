@@ -3,5 +3,5 @@ ChatPlace::Application.routes.draw do
   post '/login', to: 'sessions#create'
   post '/logout', to: 'sessions#destroy'
   resources :channels, :chatmessages, :users
-  root to: 'message#index'
+  root to: 'chatmessages#index'
 end

@@ -1,0 +1,2 @@
+class ChatmessagesController < CrudController
+end
