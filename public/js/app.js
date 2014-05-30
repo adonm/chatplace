@@ -43,10 +43,7 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
             webrtc.joinRoom("defaultRoom");
         });
     };
-    $http.get("http://api.randomuser.me/").success(function(data) {
-        scope.emailSuffix = data.results[0].user.email + " (Sign In)";
-    });
-    scope.email = null;
+    scope.email = window.current_email || false;
     scope.loginlogout = function() {
         if (scope.email) {
             navigator.id.logout();
@@ -61,13 +58,10 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
                 assertion: assertion,
                 audience: window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
             };
-            $http.post("https://cors-anywhere.herokuapp.com/https://verifier.login.persona.org/verify", data).success(function(data) {
-                scope.email = data.email;
-                scope.emailSuffix = "(Sign Out)";
-            });
+            $http.post("/users/sign_in", data).success(function(data) { window.location.reload(); });
         },
         onlogout: function() {
-            window.location.reload();
+            $http.delete("/users/sign_out").success(function() { window.location.reload(); });
         }
     });
     scope.searchLocation = null;

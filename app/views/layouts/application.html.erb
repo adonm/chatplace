@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html data-ng-app="chatplace" lang="en">
 <head>
   <meta charset="utf-8" />
   <title>chatplace - realtime place centric chat</title>
@@ -14,8 +14,9 @@
 <![endif]-->
 
   <link href="//cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.css" type="text/css">
   <link href="//cdn.jsdelivr.net/leaflet/0.7.2/leaflet.css" rel="stylesheet" type="text/css">
-  <link href="css/app.css" rel="stylesheet" type="text/css">
+  <link href="/css/app.css" rel="stylesheet" type="text/css">
 
   <%= favicon_link_tag %>
   <%= favicon_link_tag '/apple-touch-icon.png',
@@ -34,7 +35,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
   <%= render 'layouts/nav' %>
 </nav>
 
@@ -60,11 +61,10 @@
   <div id="content">
     <%= yield %>
   </div>
-
 </div>
 
 <footer>
-  <p>&copy; code!z <%= Time.zone.now.year %></p>
+    <p><a href="https://github.com/adonm/chatplace">source@github</a></p>
 </footer>
 
 <!-- Javascript placed at the end of the document so the pages load faster -->
@@ -76,11 +76,12 @@
 <script src="//cdn.jsdelivr.net/leaflet/0.7.2/leaflet.js"></script>
 <script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/momentjs/2.6.0/moment.min.js"></script>
-<script src="js/vendor/faye-browser-min.js"></script>
-<script src="js/vendor/simplewebrtc.js"></script>
-<script src="js/vendor/md5.min.js"></script>
-<script src="js/vendor/angular-gravatar.min.js"></script>
+<script src="/js/vendor/faye-browser-min.js"></script>
+<script src="/js/vendor/simplewebrtc.js"></script>
+<script src="/js/vendor/md5.min.js"></script>
+<script src="/js/vendor/angular-gravatar.min.js"></script>
 <script src="https://login.persona.org/include.js"></script>
-<script src="js/app.js"></script>
+<% if user_signed_in? %><script>window.current_email = "<%= current_user.email %>"</script><% end %>
+<script src="/js/app.js"></script>
 </body>
 </html>

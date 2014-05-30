@@ -16,7 +16,7 @@ module ActionsHelper
 
   # Outputs an icon for an action with an optional label.
   def action_icon(icon, label = nil)
-    html = content_tag(:span, '', class: "icon icon-#{icon}")
+    html = content_tag(:span, '', class: "fa fa-#{icon}")
     html << ' ' << label if label
     html
   end
@@ -25,7 +25,7 @@ module ActionsHelper
   # Uses the current +entry+ if no path is given.
   def show_action_link(path = nil)
     path ||= path_args(entry)
-    action_link(ti('link.show'), 'zoom-in', path)
+    action_link(ti('link.show'), 'search-plus', path)
   end
 
   # Standard edit action to given path.
@@ -40,7 +40,7 @@ module ActionsHelper
   # Uses the current +entry+ if no path is given.
   def destroy_action_link(path = nil)
     path ||= path_args(entry)
-    action_link(ti('link.delete'), 'remove', path,
+    action_link(ti('link.delete'), 'trash-o', path,
                 data: { confirm: ti(:confirm_delete),
                         method: :delete })
   end

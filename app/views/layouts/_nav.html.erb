@@ -1,6 +1,31 @@
-<%= link_to 'MyApp', root_path, class: 'navbar-brand' %>
+<div class="navbar-header">
+    <%= link_to 'chatplace', root_path, class: 'navbar-brand' %>
+</div>
+
 <ul class="nav navbar-nav">
-  <li><%= link_to "Link1", "/path1"  %></li>
-  <li><%= link_to "Link2", "/path2"  %></li>
-  <li><%= link_to "Link3", "/path3"  %></li>
+    <li>
+        <a class="html5-logo" href=
+        "http://validator.w3.org/check?uri=http%3A%2F%2Fstudent.csse.uwa.edu.au%2F~20138635%2FCITS3403%2Fpublic%2F"><img alt="HTML5 Powered with CSS3 / Styling"
+        src="/img/html5-badge-h-css3.png" title="HTML5 Powered with CSS3 / Styling"></a>
+    </li>
+    <li>
+        <a href="/channels">Chatrooms</a>
+    </li>
+    <li>
+        <a href="/chatmessages">History</a>
+    </li>
+</ul>
+
+<ul class="nav navbar-nav pull-right">
+    <li data-match-route="/about">
+        <a href="#/about">About</a>
+    </li>
+    <li data-match-route="/profile">
+        <a href="#/profile">Profile</a>
+    </li>
+    <li>
+    <button class="btn navbar-btn" data-ng-class="{'btn-primary': !email}" data-ng-click="loginlogout()" type="button"><span class=
+            "glyphicon glyphicon-user"><!----></span>
+        <% if user_signed_in? %><%= current_user.email %> (Sign Out)<% else %>Sign In<% end %>
+        </button> &nbsp;</li>
 </ul>

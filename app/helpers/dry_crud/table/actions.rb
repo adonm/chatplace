@@ -29,7 +29,7 @@ module DryCrud::Table
       action_col do |e|
         path = action_path(e, &block)
         if path
-          table_action_link('zoom-in',
+          table_action_link('search-plus',
                             path,
                             html_options.clone)
         end
@@ -56,7 +56,7 @@ module DryCrud::Table
       action_col do |e|
         path = action_path(e, &block)
         if path
-          table_action_link('remove',
+          table_action_link('trash-o',
                             path,
                             html_options.merge(
                               data: { confirm: ti(:confirm_delete),
@@ -73,7 +73,7 @@ module DryCrud::Table
 
     # Generic action link inside a table.
     def table_action_link(icon, url, html_options = {})
-      add_css_class(html_options, "icon icon-#{icon}")
+      add_css_class(html_options, "fa fa-#{icon}")
       link_to('', url, html_options)
     end
 

@@ -1,0 +1,19 @@
+<div class="col-md-8">
+    <div class="alert" data-ng-class="{'alert-danger': !validLocation, 'alert-success': validLocation}">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <input class="form-control" data-ng-change="zoomTo(searchLocation)" data-ng-model="searchLocation" placeholder="Enter location..." type="text">
+
+                <p>{{ validLocation }}</p>
+            </div>
+        </form>
+    </div>
+
+
+    <div data-ng-init="loadMap()" id="map">
+        <p class="text-center text-middle alert alert-info" id="mapLoadText">Loading Map...</p>
+    </div>
+</div>
+<div class="col-md-4">
+<%= crud_table :name, :longitude, :latitude %>
+</div>
