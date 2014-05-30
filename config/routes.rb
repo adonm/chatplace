@@ -1,5 +1,5 @@
 ChatPlace::Application.routes.draw do
   devise_for :users, controllers: {sessions: "sessions"}
-  resources :channels, :chatmessages, :users
+  resources :chatrooms, :chatmessages, :users
   root to: 'layouts#index'
 end

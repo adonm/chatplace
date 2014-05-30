@@ -1,0 +1,35 @@
+<div class="panel panel-default" data-ng-init="chatRoom=<%= @chatroom.id %>; loadChatRoom()">
+    <div class="panel-heading">
+        <% @title ||= ti(:title, model: full_entry_label).html_safe -%>
+        <%= @chatroom %> (X users, Y messages, created Z)
+        <% content_for(:actions, render('actions_show')) %>
+    </div>
+
+    <div class="panel-body">
+        <video class="ng-hide" height="200" id="localVideo"></video>
+        <div id="remotesVideos">
+        </div>
+        <div class="well">
+            <ul id="chat">
+                <% for @message in @chatroom.chatmessages %>
+                    <li><%= @message.user %>: <%= @message.body %></li>
+                <% end %>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="panel-footer">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <input class="form-control" id="testinput" placeholder="Start typing..." type="text">
+            </div>
+            <div class="btn-group">
+                <button id="testpost" class="btn btn-default">Send</button> <button class="btn btn-default" data-ng-click="loadWebRTC()" type="button"><span class=
+                "glyphicon glyphicon-facetime-video"><!----></span></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

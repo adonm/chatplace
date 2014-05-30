@@ -1,6 +1,6 @@
 class Chatmessage < ActiveRecord::Base
     def to_s
-        "#{channel} #{time} #{user.email}: #{body}"
+        "#{chatroom} #{time} #{user.email}: #{body}"
     end
-    validates_presence_of :time, :user_id, :channel_id, :body
+    validates_presence_of :time, :user_id, :chatroom_id, :body
 end

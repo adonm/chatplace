@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140530015618) do
+ActiveRecord::Schema.define(version: 20140530072427) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -41,16 +41,27 @@ ActiveRecord::Schema.define(version: 20140530015618) do
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_channels_user_id"
   end
 
+  create_table "chatrooms", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.float    "longitude"
+    t.float    "latitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["user_id"], :name => "fk__chatrooms_user_id"
+    t.foreign_key ["user_id"], "users", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_chatrooms_user_id"
+  end
+
   create_table "chatmessages", force: true do |t|
     t.integer  "user_id"
-    t.integer  "channel_id"
+    t.integer  "chatroom_id"
     t.text     "body"
     t.datetime "time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["channel_id"], :name => "fk__chatmessages_channel_id"
+    t.index ["chatroom_id"], :name => "fk__chatmessages_chatroom_id"
     t.index ["user_id"], :name => "fk__chatmessages_user_id"
-    t.foreign_key ["channel_id"], "channels", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_chatmessages_channel_id"
+    t.foreign_key ["chatroom_id"], "chatrooms", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_chatmessages_chatroom_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_chatmessages_user_id"
   end
 

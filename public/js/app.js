@@ -40,7 +40,7 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
         // we have to wait until it's ready
         webrtc.on("readyToCall", function() {
             // this should poll ruby server and create/get room
-            webrtc.joinRoom("defaultRoom");
+            webrtc.joinRoom(scope.chatRoom);
         });
     };
     scope.email = window.current_email || false;
@@ -58,10 +58,14 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
                 assertion: assertion,
                 audience: window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
             };
-            $http.post("/users/sign_in", data).success(function(data) { window.location.reload(); });
+            $http.post("/users/sign_in", data).success(function(data) {
+                window.location.reload();
+            });
         },
         onlogout: function() {
-            $http.delete("/users/sign_out").success(function() { window.location.reload(); });
+            $http.delete("/users/sign_out").success(function() {
+                window.location.reload();
+            });
         }
     });
     scope.searchLocation = null;
@@ -78,35 +82,22 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
             scope.validLocation = "";
         });
     };
-    scope.chatRoom = null;
-    scope.loadChatRoom = function(name) {
-        scope.chatRoom = name;
-    };
-    scope.chatRooms = {
-        pizzachat: {
-            title: "Pizza Chat",
-            users: []
-        }
-    };
-    window.angularScope = scope;
-    var client;
-    client = new Faye.Client("/faye");
-    client.subscribe("/message/test", function(payload) {
-        var time;
-        time = moment(payload.created_at).format("D/M/YYYY H:mm:ss");
-        return $("#chat").append("<li>" + time + " : " + payload.message + "</li>");
-    });
-    $(document).ready(function() {
+    scope.loadChatRoom = function() {
         var button, input;
+        scope.fayeClient = new Faye.Client("/faye");
+        scope.fayeClient.subscribe("/message/" + scope.chatRoom, function(payload) {
+            $("ul#chat").append("<li>" + payload.email + " : " + payload.body + "</li>");
+        });
         input = $("input#testinput");
         button = $("button#testpost");
-        return button.click(function() {
+        button.click(function() {
             var publication;
             button.attr("disabled", "disabled");
             button.text("Posting...");
-            publication = client.publish("/message/test", {
-                message: "(" + scope.email + ") " + input.val(),
-                created_at: new Date()
+            publication = scope.fayeClient.publish("/message/" + scope.chatRoom, {
+                email: scope.email,
+                channel: Math.round(scope.chatRoom),
+                body: input.val(),
             });
             publication.callback(function() {
                 input.val("");
@@ -118,8 +109,8 @@ angular.module("chatplace", [ "ui.gravatar", "mgcrea.ngStrap" ]).run(function($r
                 return button.text("Try again");
             });
         });
-    });
-    window.client = client;
+    };
+    window.angularScope = scope;
 }).directive("appMarkdown", function() {
     var converter = new Showdown.converter();
     return {

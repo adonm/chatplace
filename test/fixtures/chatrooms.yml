@@ -2,12 +2,12 @@
 
 one:
   user_id: 1
-  chatroom_id: 1
-  body: MyText
-  time: 2014-05-30 15:24:27
+  name: MyString
+  longitude: 1.5
+  latitude: 1.5
 
 two:
   user_id: 1
-  chatroom_id: 1
-  body: MyText
-  time: 2014-05-30 15:24:27
+  name: MyString
+  longitude: 1.5
+  latitude: 1.5
